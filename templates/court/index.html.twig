@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CourtController!{% endblock %}
+
+{% block body %}
+
+    {% for court in courts %}
+    {{ court.name }}
+    <img src="uploads/{{ court.picture }}" alt="">
+
+    {% endfor %}
+
+{% endblock %}
