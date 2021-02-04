@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Court;
+use App\Form\CommentType;
 use App\Form\CourtType;
+use App\Form\SearchCityFormType;
 use App\Repository\CourtRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,13 +22,26 @@ class CourtController extends AbstractController
     /**
      * @Route("/", name="_index")
      */
-    public function index(CourtRepository $courtRepository): Response
+    public function index(CourtRepository $courtRepository, Request $request): Response
     {
+        /*$form = $this->createForm(SearchCityFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $courts = $courtRepository->findLikeTown($search);
+        } else {
+            $courts = $courtRepository->findAll();
+        }*/
+
+        $courts = $courtRepository->findAll();
 
         return $this->render('court/index.html.twig', [
-            'courts' => $courtRepository->findAll(),
+            'courts' => $courts,
+            /*'form' => $form->createView(),*/
         ]);
     }
+
 
     /**
      * @Route("/new", name="_new")
@@ -47,7 +63,31 @@ class CourtController extends AbstractController
             return $this->redirectToRoute('court_index');
 
         }
-        return $this->render('court/new.html.twig', ["form" => $form->createView()]);
+        return $this->render('court/new.html.twig', [
+            "form" => $form->createView()
+        ]);
 
     }
+
+    /**
+     * @Route("/addcomm", name="_addcomm")
+     */
+    public function addComm(Court $court,Request $request): Response
+    {
+        $comment = new Comment();
+        $user = $this->getUser();
+        $comm = $request->get($court->getId());
+        $comment->setUser($user);
+        $comment->setCourt($court->getId());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('court/index.html.twig', [
+
+        ]);
+    }
+    
+    
 }

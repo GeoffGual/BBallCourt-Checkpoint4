@@ -19,6 +19,17 @@ class CourtRepository extends ServiceEntityRepository
         parent::__construct($registry, Court::class);
     }
 
+    public function findLikeTown(string $name)
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->where('c.town LIKE :name')
+            ->setParameter('name', '%' . $name . '%')
+            ->orderBy('c.town', 'ASC')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+
     // /**
     //  * @return Court[] Returns an array of Court objects
     //  */

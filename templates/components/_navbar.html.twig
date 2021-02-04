@@ -1,0 +1,15 @@
+<nav class="navbar  justify-content-between">
+    <a href="{{ path('court_index') }}"><i class="login fas fa-basketball-ball fa-2x"></i></a>
+    <form class="form-inline" action="{{ path('search') }}">
+        <input type="text" name="search" class="form-control mr-sm-2" placeholder="🔍 Recherche un ville">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+        
+
+    </form>
+    {% if app.user %}
+        <a href="{{ path('court_new') }}"><i class="login fas fa-folder-plus fa-2x"></i></a>
+    <a class="login" href="{{ path('app_logout') }}"><i class="login fas fa-user-slash fa-2x"></i></a>
+    {% else %}
+    <a class="login" href="{{ path('app_login') }}"><i class="login fas fa-user fa-2x"></i></a>
+    {% endif %}
+</nav>

@@ -86,6 +86,10 @@ class User implements UserInterface
         return (string) $this->email;
     }
 
+    public function getRealUsername()
+    {
+        return $this->username;
+    }
     /**
      * @see UserInterface
      */

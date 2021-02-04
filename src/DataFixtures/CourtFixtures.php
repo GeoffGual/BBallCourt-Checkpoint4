@@ -16,6 +16,7 @@ class CourtFixtures extends Fixture
         $court->setTown('Paris');
         $court->setPicture('duperré.jpg');
         $court->setLikeNumber(259);
+        $this->addReference('court_1', $court);
         $manager->persist($court);
         $manager->flush();
 

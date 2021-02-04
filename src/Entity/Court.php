@@ -6,9 +6,14 @@ use App\Repository\CourtRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=CourtRepository::class)
+ * @Vich\Uploadable
  */
 class Court
 {
@@ -38,6 +43,13 @@ class Court
      * @ORM\Column(type="string", length=255)
      */
     private $picture;
+
+    /**
+     * @Vich\UploadableField(mapping="picture_file", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -166,4 +178,19 @@ class Court
 
         return $this;
     }
+
+    public function setPictureFile(File $image = null):Court
+    {
+        $this->pictureFile = $image;
+        return $this;
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
+    }
+
+
+
+
 }

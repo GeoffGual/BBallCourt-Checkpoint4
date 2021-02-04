@@ -2,15 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
         {% block javascripts %}
+            <script defer src="/your-path-to-fontawesome/js/brands.js"></script>
+            <script defer src="/your-path-to-fontawesome/js/solid.js"></script>
+            <script defer src="/your-path-to-fontawesome/js/fontawesome.js"></script>
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
+    <header>
+        {% include 'components/_navbar.html.twig' %}
+    </header>
+    {% for category, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
         {% block body %}
 
         {% endblock %}
